@@ -2,7 +2,7 @@
 name = "redata-ext"
 version = "0.0.1"
 description = "`redata-ext` is a Meltano utility extension."
-authors = [""]
+authors = ["YanCore <zzxnormal@163.com>"]
 license = "Apache 2.0"
 packages = [
     { include = "redata_ext" }
