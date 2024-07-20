@@ -12,6 +12,7 @@ import structlog
 from meltano.edk import models
 from meltano.edk.extension import ExtensionBase
 from meltano.edk.process import Invoker, log_subprocess_error
+from meltano.edk.types import ExecArg
 
 log = structlog.get_logger()
 
@@ -44,7 +45,7 @@ class ReData(ExtensionBase):
             os.getenv("DBT_EXT_SKIP_PRE_INVOKE", "false").lower() == "true"
         )
 
-    def invoke(self, command_name: str | None, *command_args: Any) -> None:
+    def invoke(self, command_name: str | None, *command_args: ExecArg) -> None:
         """Invoke the underlying cli, that is being wrapped by this extension.
 
         Args:
@@ -52,6 +53,10 @@ class ReData(ExtensionBase):
             command_args: The arguments to pass to the command.
         """
         try:
+            command_msg = command_name if command_name else self.redata_bin
+            if len(command_args) > 0:
+                command_msg += f" {command_args[0]}"
+            log.info(f"Extension executing `{command_msg}`...")
             self.redata_invoker.run_and_log(command_name, *command_args)
         except subprocess.CalledProcessError as err:
             log_subprocess_error(
