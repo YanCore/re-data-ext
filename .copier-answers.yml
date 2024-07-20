@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier
+_commit: v0.4.2
+_src_path: gh:meltano/edk
+admin_name: ''
+cli_prefix: redata
+extension_description: A meltano utility extension for ReData that wraps the `re_data`
+    command.
+extension_id: redata-ext
+extension_name: ReData
+extension_name_lower: redata
+library_name: redata_ext
+wrapper_target_name: re_data
