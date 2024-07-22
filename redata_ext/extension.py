@@ -32,7 +32,7 @@ class ReData(ExtensionBase):
         Raises:
             MissingProfileTypeError: If the profile type is not set.
         """
-        self.redata_bin = "dbt"
+        self.redata_bin = "re_data"
         self.redata_ext_type = os.getenv("DBT_EXT_TYPE", None)
         if not self.redata_ext_type:
             raise MissingProfileTypeError("DBT_EXT_TYPE must be set")
@@ -41,9 +41,6 @@ class ReData(ExtensionBase):
             os.getenv("DBT_PROFILES_DIR", self.dbt_project_dir / "profiles")
         )
         self.redata_invoker = Invoker(self.redata_bin, cwd=self.dbt_project_dir)
-        self.skip_pre_invoke = (
-            os.getenv("DBT_EXT_SKIP_PRE_INVOKE", "false").lower() == "true"
-        )
 
     def invoke(self, command_name: str | None, *command_args: ExecArg) -> None:
         """Invoke the underlying cli, that is being wrapped by this extension.
